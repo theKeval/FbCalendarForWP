@@ -1,0 +1,70 @@
+﻿<phone:PhoneApplicationPage
+    x:Class="FbCalendar.ExploreStatuses"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:phone="clr-namespace:Microsoft.Phone.Controls;assembly=Microsoft.Phone"
+    xmlns:shell="clr-namespace:Microsoft.Phone.Shell;assembly=Microsoft.Phone"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    FontFamily="{StaticResource PhoneFontFamilyNormal}"
+    FontSize="{StaticResource PhoneFontSizeNormal}"
+    Foreground="{StaticResource PhoneForegroundBrush}"
+    SupportedOrientations="Portrait" Orientation="Portrait"
+    mc:Ignorable="d"
+    shell:SystemTray.IsVisible="True">
+
+    <!--LayoutRoot is the root grid where all page content is placed-->
+    <Grid x:Name="LayoutRoot" Background="#FFE8E8EC">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!--TitlePanel contains the name of the application and page title-->
+        <StackPanel Grid.Row="0" Margin="12,17,0,28">
+            <TextBlock Text="Rewind Your Memory" Style="{StaticResource PhoneTextNormalStyle}" Foreground="#FF35619E" FontSize="30" Margin="0" HorizontalAlignment="Center"/>
+        </StackPanel>
+
+        <!--ContentPanel - place additional content here-->
+
+        <Grid x:Name="ContentPanel" Grid.Row="1" Margin="12,0,12,0">
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="2.5*"/>
+        </Grid.RowDefinitions>
+        <Grid Margin="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <phone:LongListSelector x:Name="yearSelection_LongListSelector" ItemsSource="{Binding}"
+            		ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Hidden" Margin="0"
+            		Foreground="#FF35619E" SelectionChanged="yearChanged"/>
+            <phone:LongListSelector x:Name="monthSelection_LongListSelector" ItemsSource="{Binding}"
+                	ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                	Foreground="#FF35619E" SelectionChanged="monthChanged" Grid.Column="1" Visibility="Collapsed"/>
+        </Grid>
+        <StackPanel x:Name="sp_noUpdates" Margin="0" VerticalAlignment="Center" Grid.RowSpan="2" Visibility="Collapsed">
+            <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Remember..." Foreground="#FF35619E"/>
+            <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="You haven't updated anything in this month" Foreground="#FF35619E"/>
+        </StackPanel>
+        <StackPanel x:Name="sp_instructions" Margin="0" VerticalAlignment="Center" Grid.RowSpan="2">
+            <TextBlock HorizontalAlignment="Center" Margin="0" TextWrapping="Wrap" Text="Select Year &amp; Month" Foreground="#FF35619E"/>
+        </StackPanel>
+        <phone:LongListSelector Padding="0,10" CharacterSpacing="10"  x:Name="StatusesList_LongListSelector" ItemsSource="{Binding}" Foreground="#FF35619E" Margin="0" Grid.Row="1" ScrollViewer.HorizontalScrollBarVisibility="Visible" ScrollViewer.VerticalScrollBarVisibility="Visible" Width="456" Height="488" Visibility="Collapsed">
+            <phone:LongListSelector.ItemTemplate>
+                <DataTemplate>
+                    <Border BorderThickness="1" BorderBrush="Black">
+                        <TextBlock Text="{Binding}" TextWrapping="Wrap" />
+                    </Border>
+                </DataTemplate>
+            </phone:LongListSelector.ItemTemplate>
+        </phone:LongListSelector>
+        <!--<phone:LongListSelector x:Name="yearSelection" ItemsSource="{Binding}" HorizontalAlignment="Left" Height="100" Margin="0" VerticalAlignment="Top" Width="100"/>-->
+
+
+    </Grid>
+
+    </Grid>
+
+</phone:PhoneApplicationPage>

@@ -9,6 +9,8 @@ using Microsoft.Phone.Shell;
 using FbCalendar.Resources;
 using Facebook.Client;
 using Microsoft.WindowsAzure.MobileServices;
+using System.IO.IsolatedStorage;
+using FbCalendar.Helper;
 
 namespace FbCalendar
 {
@@ -106,6 +108,10 @@ namespace FbCalendar
         // This code will not execute when the application is deactivated
         private void Application_Closing(object sender, ClosingEventArgs e)
         {
+            
+
+            //IsolatedStorageSettings.ApplicationSettings.Remove(IsolatedStorageKeys.username);
+            //IsolatedStorageSettings.ApplicationSettings.Save();
         }
 
         // Code to execute if a navigation fails

@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Facebook;
 using FbCalendar.Helper;
 using System.Collections.ObjectModel;
+using System.IO.IsolatedStorage;
 
 namespace FbCalendar
 {
@@ -60,6 +61,10 @@ namespace FbCalendar
                 App.AccessToken = session.AccessToken;
                 App.FacebookId = session.FacebookId;
 
+
+                //IsolatedStorageSettings.ApplicationSettings.Add(IsolatedStorageKeys.username, App.FacebookId);
+                //IsolatedStorageSettings.ApplicationSettings.Save();
+
                 //App.FBLoginRecord += 1;
                 App.isAuthenticated = true;
             }
@@ -68,6 +73,8 @@ namespace FbCalendar
                 App.isAuthenticated = false;
 
                 message = "Login failed!";  // Exception details: " + e.Message
+
+                MessageBox.Show(message, "FbCalendar", MessageBoxButton.OK);
 
                 progressBar.IsIndeterminate = false;
                 rectangle_black.Visibility = Visibility.Collapsed;
@@ -86,8 +93,8 @@ namespace FbCalendar
             if (Util.IsInternetAvailable)
             {
                 //if (!App.isAuthenticated)
-                if (!string.IsNullOrEmpty(Util.LoggedInUsername))
-                {
+                //if (!string.IsNullOrEmpty(Util.LoggedInUsername))
+                //{
                     //App.isAuthenticated = true;
 
                     progressBar.IsIndeterminate = true;
@@ -124,26 +131,31 @@ namespace FbCalendar
                         //this.Frame.Navigate(typeof(ExploreStatuses));
                     }
                     //Frame.Navigate(typeof(ShowSlambook));
-                }
-                else
-                {
-                    // this.Frame.Navigate(typeof(ExploreStatuses));
+                //}
+                //else
+                //{
+                //    // this.Frame.Navigate(typeof(ExploreStatuses));
 
-                    //customDialog_alreadySignedIn.IsOpen = true;
+                //    //customDialog_alreadySignedIn.IsOpen = true;
 
-                    //MessageDialog msd = new MessageDialog("You already signed in to Facebook.");
-                    //await msd.ShowAsync();
-                }
+                //    //MessageDialog msd = new MessageDialog("You already signed in to Facebook.");
+                //    //await msd.ShowAsync();
+                //}
             }
             else
             {
                 MessageBox.Show("Looks like you are not connected to internet..!!\nCheck your internet connectivity and try again.",
                     "FbCalendar", MessageBoxButton.OK);
+
+                progressBar.IsIndeterminate = false;
+                rectangle_black.Visibility = Visibility.Collapsed;
             }
         }
 
         public async Task saveUserInfo()
         {
+            progressBar.IsIndeterminate = true;
+            rectangle_black.Visibility = Visibility.Visible;
 
             FacebookClient fbClient = new FacebookClient(App.AccessToken);
 
@@ -173,21 +185,33 @@ namespace FbCalendar
 
             #endregion
 
+            progressBar.IsIndeterminate = false;
+            rectangle_black.Visibility = Visibility.Collapsed;
+
         }
 
         private async void InsertFBuserData(FBusers fbUserData)
         {
+            progressBar.IsIndeterminate = true;
+            rectangle_black.Visibility = Visibility.Visible;
+
             // This code inserts a new TodoItem into the database. When the operation completes
             // and Mobile Services has assigned an Id, the item is added to the CollectionView
             await var_fbUser.InsertAsync(fbUserData);
 
             items = await var_fbUser.ToCollectionAsync();
             items.Add(fbUserData);
+
+            progressBar.IsIndeterminate = false;
+            rectangle_black.Visibility = Visibility.Collapsed;
         }
 
         public static ObservableCollection<Status> oc_statuses = new ObservableCollection<Status>();
         public async Task saveStatuses()
         {
+            progressBar.IsIndeterminate = true;
+            rectangle_black.Visibility = Visibility.Visible;
+
             FacebookClient fbClient = new FacebookClient(App.AccessToken);
 
             int limit = 100;
@@ -233,6 +257,9 @@ namespace FbCalendar
 
             }
 
+            progressBar.IsIndeterminate = false;
+            rectangle_black.Visibility = Visibility.Collapsed;
+
             #region Commented old code
             //var result = (IDictionary<string, object>)statusesTask;
             //var data = (IEnumerable<object>)result["data"];
@@ -263,6 +290,9 @@ namespace FbCalendar
         string day, month, year;
         public void sortStatuses()
         {
+            progressBar.IsIndeterminate = true;
+            rectangle_black.Visibility = Visibility.Visible;
+
             foreach (var oneStatus in oc_statuses)
             {
                 string date = oneStatus.str_updatedTime.Substring(0, 10);
@@ -274,6 +304,9 @@ namespace FbCalendar
                 month = separatDate[1];
                 day = separatDate[2];
             }
+
+            progressBar.IsIndeterminate = false;
+            rectangle_black.Visibility = Visibility.Collapsed;
         }
 
         protected override void OnNavigatedFrom(NavigationEventArgs e)

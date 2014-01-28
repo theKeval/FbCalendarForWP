@@ -152,8 +152,11 @@
     <Content Include="Assets\Tiles\IconicTileSmall.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="LargeFlipTile_691x336 %281%29.png" />
     <Content Include="LargeFlipTile_691x336.png" />
+    <Content Include="Logo %28300x300%29.png" />
     <Content Include="Logo.png" />
+    <Content Include="MediumFlipTile_336x336 %281%29.png" />
     <Content Include="MediumFlipTile_336x336.png" />
     <Content Include="SmallFlipTile_159x159.png" />
   </ItemGroup>
